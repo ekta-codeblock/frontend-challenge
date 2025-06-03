@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white border rounded-lg shadow p-4 w-full max-w-sm">
-    <HeaderDisplay :title="title" :description="description" />
+    <Header :title="title" :description="description" />
 
     <svg
       height="200"
@@ -18,14 +18,14 @@
       />
     </svg>
 
-    <PercentageSlider v-model="percentageInput" :threshold="minThreshold" />
+    <Slider v-model="percentageInput" :min-threshold="minThreshold" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import HeaderDisplay from './Header.vue'
-import PercentageSlider from './Slider.vue'
+import Header from './Header.vue'
+import Slider from './Slider.vue'
 
 const props = defineProps<{
   title: string

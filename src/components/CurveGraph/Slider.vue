@@ -2,7 +2,7 @@
     <div class=" mt-6">
         <label class="block">
             <input v-model="localValue" type="range" min="0" max="100" step="1" class="w-full slider"
-                :class="{ 'slider-danger': localValue < threshold }" :aria-valuemin="0" :aria-valuemax="100"
+                :class="{ 'slider-danger': localValue < minThreshold }" :aria-valuemin="0" :aria-valuemax="100"
                 :aria-valuenow="localValue" aria-label="Percentage slider" title="Adjust percentage" role="slider"
                 ref="rangeInput" @input="updateTooltipPosition" />
 
@@ -19,7 +19,7 @@ import { ref, watch, onMounted, nextTick } from 'vue'
 
 const props = defineProps<{
     modelValue: number
-    threshold: number
+    minThreshold: number
 }>()
 
 const emit = defineEmits(['update:modelValue'])

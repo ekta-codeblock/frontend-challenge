@@ -1,54 +1,56 @@
 # Frontend Challenge
 
 ## Overview
-This challenge is designed to assess your frontend development skills, specifically focusing on component development, documentation, and testing practices.
+This challenge is designed to assess your frontend development skills, focusing on component development, documentation, and testing practices.
 
-It is expected to be completed within a day. This challenge is designed to assess all levels of frontend developers, so please do not worry if you are unable to complete all the requirements.
+This challenge is expected to be completed within a day and is designed for all levels of frontend developers. Please do not worry if you are unable to complete all the requirements—just do your best!
 
-You are encouraged to ask questions if you are unsure about any part of the challenge. We are here to help you succeed.
+If you have any questions or need clarification, feel free to ask. We are here to help you succeed.
 
-## Project Commands
+## Prerequisites
+- Node.js (v20 or higher recommended)
+- npm, yarn, bun, or pnpm (choose your preferred package manager)
 
-The following commands assume you are using npm, however you can use yarn/bun/pnpm if you prefer.
+## Project Versions
+- Node.js: v20 or higher recommended
+- Vue: 3.x
+- Vite: See `package.json` for the exact version
+- Storybook: See `package.json` for the exact version
+- Vitest: See `package.json` for the exact version
 
-To start storybook, run the following command:
+## Getting Started
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd frontend-challenge
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run storybook
-```
-
-To start Vite/Vue, run the following command:
-
+## Running the Project
+To start the Vite/Vue development server:
 ```bash
 npm run dev
 ```
 
-## Requirements
+To start Storybook:
+```bash
+npm run storybook
+```
 
-### 1. Component Development
-Component development is the core of this challenge. You are expected to create a Vue 3 component that generates a curve based that shifts based on a user input.
+## Running Test Cases with Vitest
+To run all test cases using Vitest:
+```bash
+npm run test
+```
 
-- Create a Vue 3 component based on the design specifications provided in the `docs` folder. 
-- You may use any non-linear function such as `sin`, `cos`, `tan`, `log`, `exp`, etc. to generate the curve. 
-- You may add supporting packages, but you must not use any UI libraries. 
-- You may use refernce code from online sources and docuemntation, but you will be expected to explain the code you have used and to cite your sources. This includes any AI generated code.
+For more options and configuration, refer to the [Vitest documentation](https://vitest.dev/).
 
-### 2. Documentation
-Documenation is important for the maintainability and usability of the component. It helps both new developers understand the component and existing developers to maintain it.
+## Contribution Guidelines
+- Follow best practices for code style and documentation.
+- Ensure all tests pass before submitting your solution.
+- Cite any external sources or references used.
 
-- Include any inline documentation where appropriate
-- Create Storybook documentation for the component
-  - Include different states and variations
-  - Document props, events, and slots
-  - Provide usage examples
-- Include a component README with setup and usage instructions
-
-### 3. Testing
-Automated testing is important to ensure the component works as expected and to prevent regressions. It also speeds up the development process by providing quick feedback.
-
-- Write comprehensive tests for the component
-- You may choose to use something otther than vitest for testing.
-
-## Good luck!
-We're excited to see your approach to solving this challenge. Remember, we're not just looking at whether the component works, but also how you write your code.
 

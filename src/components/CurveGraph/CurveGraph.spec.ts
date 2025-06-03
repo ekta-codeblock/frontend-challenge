@@ -32,7 +32,7 @@ describe('CurveGraph', () => {
     expect(wrapper.find('svg').attributes('style')).toContain('rgb(254, 226, 226)')
 
     // Update percentage to above threshold
-    await wrapper.setProps({ percentage: 50, threshold: 50 })
+    await wrapper.setProps({ percentage: 50, minThreshold: 50 })
     expect(wrapper.find('path').attributes('stroke')).toBe('#66bf3c')
     expect(wrapper.find('svg').attributes('style')).toContain('rgb(233, 255, 222)')
   })
@@ -45,8 +45,8 @@ describe('CurveGraph', () => {
       }
     })
 
-    await wrapper.setProps({ percentage: 60, threshold: 50 })
-    expect(wrapper.vm.percentageInput).toBe(60)
+    await wrapper.setProps({ percentage: 60, minThreshold: 50 })
+    expect(wrapper.vm.percentage).toBe(60)
   })
 
   it('generates correct path data based on percentage', () => {
