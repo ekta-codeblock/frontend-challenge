@@ -46,7 +46,7 @@
         font-size="4"
         font-style="italic"
       >
-      {{ warningMessage }}
+       * The value is below {{minThreshold}}%
       </text>
     </svg>
     <!-- Interactive slider bound to percentageInput -->
@@ -90,10 +90,6 @@ const showWarning = computed(() =>
   props.minThreshold !== undefined ? Number(percentageInput.value) < Number(props.minThreshold) : false
 )
 
-// Show warning message if the value is below the minimum threshold
-const warningMessage = computed(() =>
-  showWarning.value? `* The Value is below ${props.minThreshold}` : ''
-)
 // Stroke color of the curve: red if below threshold, green otherwise
 const pathColor = computed(() =>
   showWarning.value ? '#ef4444' : '#66bf3c'

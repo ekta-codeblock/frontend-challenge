@@ -4,74 +4,88 @@ import CurveGraph from './CurveGraph.vue'
 import HeaderDisplay from './Header.vue'
 import PercentageSlider from './Slider.vue'
 
-describe('CurveGraph', () => {
-  it('renders properly with required props', () => {
-    // Mount the component with required props
+describe('CurveGraph.vue', () => {
+  it('renders required structure and subcomponents', () => {
     const wrapper = mount(CurveGraph, {
       props: {
         title: 'Test Graph',
         percentage: 50,
-        minThreshold: 20
-      }
+        minThreshold: 30,
+      },
     })
 
-    // Ensure subcomponents render correctly
     expect(wrapper.findComponent(HeaderDisplay).exists()).toBe(true)
     expect(wrapper.findComponent(PercentageSlider).exists()).toBe(true)
     expect(wrapper.find('svg').exists()).toBe(true)
+    expect(wrapper.text()).toContain('Test Graph')
   })
 
-  it('computes path color and background color based on threshold', async () => {
-    // Mount with percentage below threshold
+  it('renders warning message correctly when below threshold', () => {
     const wrapper = mount(CurveGraph, {
       props: {
-        title: 'Test Graph',
-        percentage: 30,
-        minThreshold: 40
-      }
+        title: 'Warning Test',
+        percentage: 25,
+        minThreshold: 30,
+      },
+    })
+  
+    const warningText = wrapper.find('text')
+  
+    expect(warningText.exists()).toBe(true)
+    expect(warningText.text()).toBe('* The value is below 30%')
+  })
+  
+  it('shows success color when percentage >= minThreshold', async () => {
+    const wrapper = mount(CurveGraph, {
+      props: {
+        title: 'Safe Test',
+        percentage: 35,
+        minThreshold: 30,
+      },
     })
 
-    // Expect stroke to be warning red
-    expect(wrapper.find('path').attributes('stroke')).toBe('#ef4444')
-    // Expect background to be light red
-    expect(wrapper.find('svg').attributes('style')).toContain('rgb(254, 226, 226)')
+    const path = wrapper.find('path')
+    const svg = wrapper.find('svg')
 
-    // Update props to percentage above threshold
-    await wrapper.setProps({ percentage: 50, minThreshold: 50 })
+    expect(path.attributes('stroke')).toBe('#66bf3c')
+    expect(svg.attributes('style')).toContain('background-color: rgb(233, 255, 222)') // #e9ffde
+    expect(wrapper.text()).not.toContain('below')
+  })
 
-    // Expect stroke to switch to green
+  it('updates internal model when prop changes', async () => {
+    const wrapper = mount(CurveGraph, {
+      props: {
+        title: 'Reactive Test',
+        percentage: 40,
+        minThreshold: 30,
+      },
+    })
+
+    await wrapper.setProps({ percentage: 60 })
+    expect((wrapper.vm as any).percentageInput).toBe(60)
+  })
+
+  it('computes SVG path correctly based on percentage', () => {
+    const wrapper = mount(CurveGraph, {
+      props: {
+        title: 'Path Test',
+        percentage: 50,
+      },
+    })
+
+    const path = wrapper.find('path')
+    expect(path.attributes('d')).toBe('M0,80 Q 50,20 100,80')
+  })
+
+  it('does not show warning if no minThreshold is provided', () => {
+    const wrapper = mount(CurveGraph, {
+      props: {
+        title: 'No Threshold',
+        percentage: 10,
+      },
+    })
+
+    expect(wrapper.text()).not.toContain('below')
     expect(wrapper.find('path').attributes('stroke')).toBe('#66bf3c')
-    // Expect background to switch to light green
-    expect(wrapper.find('svg').attributes('style')).toContain('rgb(233, 255, 222)')
-  })
-
-  it('updates percentageInput when percentage prop changes', async () => {
-    // Mount with initial percentage
-    const wrapper = mount(CurveGraph, {
-      props: {
-        title: 'Test Graph',
-        percentage: 30
-      }
-    })
-
-    // Change prop value
-    await wrapper.setProps({ percentage: 60, minThreshold: 50 })
-
-    // Confirm internal prop has updated
-    expect(wrapper.vm.percentage).toBe(60)
-  })
-
-  it('generates correct path data based on percentage', () => {
-    // Mount with percentage 50
-    const wrapper = mount(CurveGraph, {
-      props: {
-        title: 'Test Graph',
-        percentage: 50
-      }
-    })
-
-    // The SVG path should match this quadratic curve
-    const expectedPath = 'M0,80 Q 50,20 100,80'
-    expect(wrapper.find('path').attributes('d')).toBe(expectedPath)
   })
 })
