@@ -1,4 +1,19 @@
 <template>
+  <!--
+    CurveGraph Component
+    -------------------
+    Props:
+      - title (string, required): Title for the graph header
+      - description (string, optional): Description for the graph
+      - percentage (number, required): Controls the curve's peak position (0-100)
+      - minThreshold (number, optional): Minimum threshold for warning state
+    Emits:
+      - (none)
+    Slots:
+      - (none)
+    Usage Example:
+      <CurveGraph title="Performance" :percentage="75" :minThreshold="60" />
+  -->
   <div class="bg-white border rounded-lg shadow p-4 w-full max-w-sm">
     <Header :title="title" :description="description" />
 
@@ -27,6 +42,13 @@ import { ref, computed, watch } from 'vue'
 import Header from './Header.vue'
 import Slider from './Slider.vue'
 
+/**
+ * Props for CurveGraph
+ * @prop {string} title - Title for the graph header (required)
+ * @prop {string} [description] - Description for the graph
+ * @prop {number} percentage - Controls the curve's peak position (required)
+ * @prop {number} [minThreshold] - Minimum threshold for warning state
+ */
 const props = defineProps<{
   title: string
   description?: string
