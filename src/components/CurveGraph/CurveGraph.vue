@@ -46,13 +46,12 @@
         font-size="4"
         font-style="italic"
       >
-        * The value is below {{ minThreshold }}%
+      {{ warningMessage }}
       </text>
     </svg>
-
     <!-- Interactive slider bound to percentageInput -->
     <Slider
-      :modelValue="percentageInput"
+      v-model:modelValue="percentageInput"
       :min-threshold="minThreshold"
       :style="{ accentColor: sliderColor }"
     />
@@ -88,9 +87,13 @@ watch(() => props.percentage, (newVal) => {
 
 // Show warning if the value is below the minimum threshold
 const showWarning = computed(() =>
-  props.minThreshold !== undefined ? percentageInput.value < props.minThreshold : false
+  props.minThreshold !== undefined ? Number(percentageInput.value) < Number(props.minThreshold) : false
 )
 
+// Show warning message if the value is below the minimum threshold
+const warningMessage = computed(() =>
+  showWarning.value? `* The Value is below ${props.minThreshold}` : ''
+)
 // Stroke color of the curve: red if below threshold, green otherwise
 const pathColor = computed(() =>
   showWarning.value ? '#ef4444' : '#66bf3c'
