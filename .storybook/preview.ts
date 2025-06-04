@@ -1,4 +1,4 @@
-import type { Preview } from '@storybook/vue3'
+import type { Preview } from '@storybook/vue3-vite'
 
 const preview: Preview = {
   parameters: {
@@ -16,6 +16,8 @@ const preview: Preview = {
       test: 'todo'
     }
   },
+
+  tags: ['autodocs']
 };
 
 export default preview;

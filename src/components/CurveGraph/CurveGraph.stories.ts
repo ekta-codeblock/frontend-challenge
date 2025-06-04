@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
-import CurveGraph from './CurveGraph.vue'
+import type { Meta, StoryObj } from "@storybook/vue3-vite";
+import CurveGraph from "./CurveGraph.vue";
 
 /**
  * CurveGraph Storybook Documentation
@@ -16,82 +16,91 @@ import CurveGraph from './CurveGraph.vue'
  * ```
  */
 const meta = {
-    title: 'Components/CurveGraph',
-    component: CurveGraph,
-    tags: ['autodocs'],
-    argTypes: {
-        title: { control: 'text', description: 'Title for the graph header' },
-        description: { control: 'text', description: 'Description for the graph' },
-        percentage: { control: { type: 'range', min: 0, max: 100, step: 1 }, description: 'Controls the curve\'s peak position (0-100)' },
-        minThreshold: { control: { type: 'range', min: 0, max: 100, step: 1 }, description: 'Minimum threshold for warning state' },
+  title: "Components/CurveGraph",
+  component: CurveGraph,
+  tags: ["autodocs"],
+  argTypes: {
+    title: { control: "text", description: "Title for the graph header" },
+    description: { control: "text", description: "Description for the graph" },
+    percentage: {
+      control: { type: "range", min: 0, max: 100, step: 1 },
+      description: "Controls the curve's peak position (0-100)",
     },
-    parameters: {
-        docs: {
-            description: {
-                component: 'A graph component for visualizing performance metrics with customizable thresholds. Adjust the props to see different curve behaviors.'
-            }
-        }
-    }
-} satisfies Meta<typeof CurveGraph>
+    minThreshold: {
+      control: { type: "range", min: 0, max: 100, step: 1 },
+      description: "Minimum threshold for warning state",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "A graph component for visualizing performance metrics with customizable thresholds. Adjust the props to see different curve behaviors.",
+      },
+    },
+  },
+} satisfies Meta<typeof CurveGraph>;
 
-export default meta
+export default meta;
 
 // Story type
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof meta>;
 
 /**
  * HighPerformance: Shows a curve with a high percentage above the threshold.
  */
 export const HighPerformance: Story = {
-    args: {
-        title: 'High Performance Metric',
-        description: 'Shows the current performance level',
-        percentage: 85,
-        minThreshold: 60,
+  args: {
+    title: "High Performance Metric",
+    description: "Shows the current performance level",
+    percentage: 85,
+    minThreshold: 60,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "The curve is green, indicating performance is above the threshold.",
+      },
     },
-    parameters: {
-        docs: {
-            description: {
-                story: 'The curve is green, indicating performance is above the threshold.'
-            }
-        }
-    }
-}
+  },
+};
 
 /**
  * MinThreshold: Shows a curve just below the minimum threshold.
  */
 export const MinThreshold: Story = {
-    args: {
-        title: 'Critical Metric',
-        description: 'Current value is below threshold',
-        percentage: 15,
-        minThreshold: 20,
+  args: {
+    title: "Critical Metric",
+    description: "Current value is below threshold",
+    percentage: 15,
+    minThreshold: 20,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "The curve is red, indicating performance is below the threshold.",
+      },
     },
-    parameters: {
-        docs: {
-            description: {
-                story: 'The curve is red, indicating performance is below the threshold.'
-            }
-        }
-    }
-}
+  },
+};
 
 /**
  * LowPerformance: Shows a curve with a low percentage but above the threshold.
  */
 export const LowPerformance: Story = {
-    args: {
-        title: 'Low Performance Metric',
-        description: 'Shows the current performance level',
-        percentage: 35,
-        minThreshold: 30,
+  args: {
+    title: "Low Performance Metric",
+    description: "Shows the current performance level",
+    percentage: 35,
+    minThreshold: 30,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "The curve is green, but close to the threshold.",
+      },
     },
-    parameters: {
-        docs: {
-            description: {
-                story: 'The curve is green, but close to the threshold.'
-            }
-        }
-    }
-}
+  },
+};

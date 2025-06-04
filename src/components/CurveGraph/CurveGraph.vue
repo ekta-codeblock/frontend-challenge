@@ -15,8 +15,10 @@
       <CurveGraph title="Performance" :percentage="75" :minThreshold="60" />
   -->
   <div class="bg-white border rounded-lg shadow p-4 w-full max-w-sm">
+    <!-- Header with title and optional description -->
     <Header :title="title" :description="description" />
 
+    <!-- SVG Curve Graph -->
     <svg
       height="200"
       width="300"
@@ -25,15 +27,35 @@
       class="p-1 rounded border"
       :style="{ backgroundColor }"
     >
+      <!-- Render the smoothed curve path -->
       <path
         :d="smoothedPathData"
         :stroke="pathColor"
         fill="none"
         stroke-width="2"
       />
+
+      <!-- Warning message displayed inside the SVG at the bottom -->
+      <text
+        v-if="showWarning"
+        x="50"
+        y="95"
+        text-anchor="end"
+        dominant-baseline="middle"
+        fill="#b91c1c"
+        font-size="4"
+        font-style="italic"
+      >
+        * The value is below {{ minThreshold }}%
+      </text>
     </svg>
 
-    <Slider v-model="percentageInput" :min-threshold="minThreshold" />
+    <!-- Interactive slider bound to percentageInput -->
+    <Slider
+      :modelValue="percentageInput"
+      :min-threshold="minThreshold"
+      :style="{ accentColor: sliderColor }"
+    />
   </div>
 </template>
 
@@ -56,24 +78,35 @@ const props = defineProps<{
   minThreshold?: number
 }>()
 
+// Internal reactive model for the slider input
 const percentageInput = ref(props.percentage)
 
+// Sync local model with prop if it changes from the parent
 watch(() => props.percentage, (newVal) => {
   percentageInput.value = newVal
 })
 
+// Show warning if the value is below the minimum threshold
 const showWarning = computed(() =>
   props.minThreshold !== undefined ? percentageInput.value < props.minThreshold : false
 )
 
+// Stroke color of the curve: red if below threshold, green otherwise
 const pathColor = computed(() =>
   showWarning.value ? '#ef4444' : '#66bf3c'
 )
 
+// Background color of SVG based on warning state
 const backgroundColor = computed(() =>
   showWarning.value ? '#fee2e2' : '#e9ffde'
 )
 
+// Slider color changes from red to dark red depending on the value
+const sliderColor = computed(() => {
+  return showWarning.value ? '#ef4444' : '#7f1d1d'
+})
+
+// Generates a smooth quadratic Bézier curve from left to right with a peak controlled by percentageInput
 const smoothedPathData = computed(() => {
   const xStart = 0
   const yStart = 80
